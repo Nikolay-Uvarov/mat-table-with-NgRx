@@ -1,7 +1,7 @@
 export interface CustomerParams {
   filter: string;
-  sortDirection: string;
-  sortField: 'asc' | 'desc'| '';
+  sortDirection: 'asc' | 'desc'| '';
+  sortField: string;
   pageIndex: number;
   pageSize: number;
 }

@@ -38,9 +38,10 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
       filter: '',
       pageIndex: 0,
       pageSize: 3,
-      sortDirection: '',
-      sortField: ''
+      sortDirection: this.defaultSort.direction,
+      sortField: this.defaultSort.active
     }));
+
     this.error$ = this.store.pipe(select(selectCustomerError));
     this.store.pipe(select(selectCustomerLoading)).subscribe(loading => {
       if (loading) {

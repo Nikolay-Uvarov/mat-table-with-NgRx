@@ -5,7 +5,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { CustomerActionType, CustomerLoadAction, CustomerLoadSuccessAction, CustomerLoadFailAction } from '../actions/customer.actions';
 import { CustomerService } from '../../services/customer.service';
 import { CustomerParams } from '../../core/models/customer-params';
-import { Customer } from '../../core/models/customer';
+import { CustomerResponse } from 'src/app/core/models/CustomerResponse';
 
 @Injectable()
 export class CustomerEffects {
@@ -17,7 +17,7 @@ export class CustomerEffects {
       map(action => action.payload),
       switchMap((params: CustomerParams) =>
         this.service.getCustomers(params).pipe(
-          map((customers: Customer[]) => new CustomerLoadSuccessAction(customers)),
+          map((response: CustomerResponse) => new CustomerLoadSuccessAction(response)),
           catchError((error) => of(new CustomerLoadFailAction(error)))
         )
       )

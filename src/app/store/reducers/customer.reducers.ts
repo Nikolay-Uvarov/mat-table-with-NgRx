@@ -7,17 +7,19 @@ export function customerReducer(state = initialCustomerState, action: CustomerAc
       return { ...state, loading: true };
     }
     case CustomerActionType.LoadSuccess: {
-      return customerAdapter.addAll(action.payload, {
+      return customerAdapter.addAll(action.payload.customers, {
         ...state,
         error: false,
-        loading: false
+        loading: false,
+        total: action.payload.total
       });
     }
     case CustomerActionType.LoadFailure: {
       return customerAdapter.removeAll({
         ...state,
         error: true,
-        loading: false
+        loading: false,
+        total: 0
       });
     }
     default:

@@ -25,11 +25,6 @@ export const selectAllCustomer = createSelector(
   (_selectAllCustomer)
 );
 
-export const selectCustomerTotal = createSelector(
-  selectCustomerState,
-  (_selectCustomerTotal)
-);
-
 export const selectCustomerError = createSelector(
   selectCustomerState,
   (state: CustomerState): boolean => state.error
@@ -38,4 +33,10 @@ export const selectCustomerError = createSelector(
 export const selectCustomerLoading = createSelector(
   selectCustomerState,
   (state: CustomerState): boolean => state.loading
+);
+
+
+export const selectCustomerTotal = createSelector(
+  selectCustomerState,
+  (state: CustomerState): number => state.total
 );

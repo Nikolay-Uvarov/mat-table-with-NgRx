@@ -4,18 +4,19 @@ import { Customer } from '../core/models/customer';
 import { CustomerParams } from '../core/models/customer-params';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { CustomerResponse } from '../core/models/CustomerResponse';
 
 @Injectable()
 export class CustomerService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getCustomers(params: CustomerParams): Observable<Customer[]> {
+  public getCustomers(params: CustomerParams): Observable<CustomerResponse> {
     // return this.httpClient.post<Customer[]>("localhost:4200/customers", params);
     return of(this.getFakeCustomers(params)).pipe(delay(3000));
   }
 
-  private getFakeCustomers(params: CustomerParams): Customer[] {
+  private getFakeCustomers(params: CustomerParams): CustomerResponse {
     let data = <Customer[]>[];
 
     data = customers.filter(c => ~(c.role.toLocaleLowerCase()).indexOf(params.filter)
@@ -24,8 +25,10 @@ export class CustomerService {
 
     data.sort((a, b) => (a[params.sortField] > b[params.sortField] ? 1 : -1) * (params.sortDirection === "asc" ? 1 : -1));    
     
-    return data = data.slice((params.pageIndex) * params.pageSize, (params.pageIndex + 1) * params.pageSize);
-
+    return {
+      total: data.length,
+      customers: data.slice((params.pageIndex) * params.pageSize, (params.pageIndex + 1) * params.pageSize)
+    };
   }
 }
 
