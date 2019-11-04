@@ -1,0 +1,79 @@
+@import "../../assets/scss/global-variables.scss";
+
+.customer-content {
+  .table-header {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+
+    .header {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar {
+      display: flex;
+
+      .dc-search {
+        width: 196px;
+
+        @media (min-width: 1920px) {
+          width: 302px;
+        }
+      }
+    }
+  }
+
+  .table-container {
+    border: 1px solid $alto-color;
+    margin-top: 8px;
+
+    table {
+      font-family: 'Open sans';
+      color: $deep-blue-color;
+      line-height: 17px !important;
+      width: 100%;
+
+      tr.mat-header-row {
+        height: 35px;
+      }
+
+      tr.customer-row:hover {
+        background-color: $off-water-color;
+      }
+
+      tr.customer-row.mat-footer-row,
+      tr.customer-row.mat-row {
+        height: 40px;
+        cursor: pointer;
+      }
+
+      .no-data-row {
+        height: 198px;
+
+        .no-data-cell {
+          text-align: center;
+        }
+          .no-data-cell > span {
+            display: block;
+            margin-top: 4px;
+          }
+          .no-data-cell > span.retry {
+            display: block;
+            color: $pine-green-color;
+            cursor: pointer;
+          }
+      }
+
+      th.mat-header-cell {
+        color: $blue-wood-color !important;
+        background-color: $catskill-white-color;
+        letter-spacing: 0.3px;
+      }
+
+      td.mat-cell {
+        color: $deep-blue-color;
+      }
+    }
+  }
+}

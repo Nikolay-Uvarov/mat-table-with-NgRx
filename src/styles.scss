@@ -1,1 +1,288 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./assets/scss/global-variables.scss";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+  color: $deep-blue-color;
+  letter-spacing: 0.3px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+
+/*1366px and default*/
+.dc-h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.dc-h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.dc-h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dc-h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dc-action {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dc-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dc-content {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.dc-content-sm {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.dc-content-sm-semibold {
+  @extend .dc-content-sm;
+  font-weight: 600;
+}
+
+.dc-numerical-sm {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.dc-numerical {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.dc-icon-large {
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 20px !important;
+}
+
+.dc-icon-medium {
+  width: 14px !important;
+  height: 14px !important;
+  font-size: 14px !important;
+}
+
+.dc-icon-small {
+  width: 12px !important;
+  height: 12px !important;
+  font-size: 12px !important;
+}
+
+.dc-icon-x-small {
+  width: 10px !important;
+  height: 10px !important;
+  font-size: 10px !important;
+}
+
+.dc-nav {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.dc-sub-nav {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.dc-nav-semibold {
+  @extend .dc-nav;
+  font-weight: 600;
+}
+
+.dc-sub-nav-semibold {
+  @extend .dc-sub-nav;
+  font-weight: 600;
+}
+
+.dc-btn {
+  @extend .dc-action;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 2px;
+  height: 32px;
+  min-width: 90px;
+  max-width: 408px;
+  border: 1px solid #000;
+  border-radius: 2px;
+  letter-spacing: 0.3px;
+  line-height: 17px;
+  text-align: center;
+  color: black;
+  background-color: $white-color;
+}
+
+.dc-btn-primary {
+  @extend .dc-btn;
+  border: none;
+  color: $white-color;
+  background-color: $pine-green-color;
+}
+
+.dc-btn-primary:hover:not(:disabled),
+.dc-btn-primary:active:not(:disabled) {
+  background-color: $blue-stone-color;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.dc-btn-primary:disabled {
+  color: rgba($white-color, .57);
+  background-color: rgba($pine-green-color, 0.5);
+}
+
+.dc-btn-primary-dark {
+  @extend .dc-btn;
+  border: none;
+  color: $deep-blue-color;
+  background-color: $white-color;
+}
+
+.dc-btn-primary-dark:hover:not(:disabled),
+.dc-btn-primary-dark:active:not(:disabled) {
+  background-color: $off-water-color;
+}
+
+.dc-btn-primary-dark:disabled {
+  color: rgba($deep-blue-color, .5);
+  background-color: rgba($white-color, 0.5);
+}
+
+.dc-btn-secondary {
+  @extend .dc-btn;
+  color: $pine-green-color;
+  background-color: $white-color;
+  border: 1px solid $pine-green-color;
+}
+
+.dc-btn-secondary:hover:not(:disabled),
+.dc-btn-secondary:active:not(:disabled) {
+  background-color: $off-water-color;
+}
+
+.dc-btn-secondary:disabled {
+  color: rgba($pine-green-color, .5);
+  background-color: $white-color;
+  border-color: rgba($pine-green-color, 0.5);
+}
+
+.dc-btn-secondary-dark {
+  @extend .dc-btn;
+  color: $white-color;
+  background-color: inherit;
+  border: 1px solid $white-color;
+}
+
+.dc-btn-secondary-dark:hover:not(:disabled),
+.dc-btn-secondary-dark:active:not(:disabled) {
+  background-color: rgba($off-water-color, .25);
+}
+
+.dc-btn-secondary-dark:disabled {
+  color: rgba($white-color, .5);
+}
+
+.dc-btn-teritiary {
+  @extend .dc-btn;
+  @extend .dc-label;
+  min-width: 0;
+  border: none;
+  color: $pine-green-color;
+  background-color: transparent;
+}
+
+.dc-btn-teritiary:hover:not(:disabled),
+.dc-btn-teritiary:active:not(:disabled) {
+  color: $deep-blue-color;
+}
+
+.dc-btn-teritiary:disabled {
+  color: rgba($pine-green-color, .5);
+}
+
+.dc-btn-teritiary-dark {
+  @extend .dc-btn;
+  @extend .dc-label;
+  min-width: 0;
+  border: none;
+  color: $white-color;
+  background-color: transparent;
+}
+
+.dc-btn-teritiary-dark:hover:not(:disabled),
+.dc-btn-teritiary-dark:active:not(:disabled) {
+  color: $opal-color;
+}
+
+.dc-btn-teritiary-dark:disabled {
+  color: rgba($white-color, .5);
+}
+
+.dc-link {
+  @extend .dc-label;
+  color: $cerulean-color;
+  cursor: pointer;
+}
+
+.dc-link:hover {
+  text-decoration: underline;
+}
+
+.dc-link:disabled {
+  opacity: .5;
+}
+
+.dc-input {
+  @extend .dc-content;
+  letter-spacing: 0.3px;
+  display: inline-block;
+  height: 32px;
+  color: $deep-blue-color;
+  line-height: 17px;
+  padding: 8px 8px 7px 12px;
+  box-sizing: border-box;
+  border: 1px solid $gray-chateau-color;
+  background-color: $white-color;
+  border-radius: 2px;
+}
+
+.dc-input::placeholder {
+  opacity: 0.5;
+  color: $pale-sky-color;
+}
+
+.dc-input:hover:not(:disabled),
+.dc-input:active:not(:disabled) {
+  border: 1px solid $pine-green-color;
+}
+
+.dc-search {
+  @extend .dc-input;
+  background: url(assets/icons/search.svg) no-repeat right 12px center;
+  background-size: 14px;
+}
