@@ -78,13 +78,13 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private loadCustomers() {
     console.log(this.paginator);
-    this.store.dispatch(new CustomerLoadAction({
+    this.store.dispatch(new CustomerLoadAction(<CustomerParams>{
       filter: this.input.nativeElement.value.toLocaleLowerCase(),
       pageIndex: this.paginator.pageIndex,
       pageSize: this.paginator.pageSize,
       sortDirection: this.sort.direction,
       sortField: this.sort.active
-    } as CustomerParams));
+    }));
   }
 
   private initializeData(customers: Customer[]): void {
