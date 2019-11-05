@@ -4,10 +4,10 @@
           Customers ({{customerTotal}})
         </div>
         <div class="search-bar">
-          <input class="dc-search" placeholder="Search Customer" #input>
+          <input class="dc-search" placeholder="Search Customer" (keyup)="filterSubject.next($event.target.value)">
         </div>
       </div>
-  <div class="table-container" #tableContainer>
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true"
       [matSortActive]="defaultSort.active" [matSortDirection]="defaultSort.direction">
 

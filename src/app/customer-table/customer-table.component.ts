@@ -8,7 +8,7 @@ import { selectAllCustomer, selectCustomerTotal, selectCustomerError, selectCust
 import { CustomerLoadAction } from '../store/actions/customer.actions';
 import { CustomerParams } from '../core/models/customer-params';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable, fromEvent, merge } from 'rxjs';
+import { Observable, merge, Subject, Subscription } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -20,27 +20,31 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild('tableContainer', { static: true }) public tableContainer: ElementRef;
-  @ViewChild('input', { static: true }) input: ElementRef;
 
   public displayedColumns: string[] = ['id', 'role', 'firstName', 'lastName', 'amount'];
   public dataSource: MatTableDataSource<Customer>;
   public customerTotal: number;
-  public noData: Customer[] = [{} as Customer];
+  public noData: Customer[] = [<Customer>{}];
   public loading: boolean;
   public error$: Observable<boolean>;
+  public filterSubject = new Subject<string>();
+
   private defaultSort: Sort = { active: 'role', direction: 'asc' };
+  private filter: string = "";
+  private subscription: Subscription;
 
   constructor(public store: Store<GlobalState>) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(new CustomerLoadAction({
-      filter: '',
-      pageIndex: 0,
-      pageSize: 3,
-      sortDirection: this.defaultSort.direction,
-      sortField: this.defaultSort.active
-    }));
+    this.store.dispatch(new CustomerLoadAction(
+      <CustomerParams>{
+        filter: this.filter,
+        pageIndex: 0,
+        pageSize: 3,
+        sortDirection: this.defaultSort.direction,
+        sortField: this.defaultSort.active
+      }
+    ));
 
     this.error$ = this.store.pipe(select(selectCustomerError));
     this.store.pipe(select(selectCustomerLoading)).subscribe(loading => {
@@ -54,40 +58,45 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   public ngAfterViewInit(): void {
-    fromEvent(this.input.nativeElement, 'keyup').pipe(
+    let filter$ = this.filterSubject.pipe(
       debounceTime(150),
       distinctUntilChanged(),
-      tap(() => {
+      tap((value: string) => {
         this.paginator.pageIndex = 0;
-        this.loadCustomers();
+        this.filter = value;
       })
-    ).subscribe();
+    );
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    let sort$ = this.sort.sortChange.pipe(tap(() => this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page).pipe(
+    this.subscription = merge(filter$, sort$, this.paginator.page).pipe(
       tap(() => this.loadCustomers())
     ).subscribe();
   }
 
-  public ngOnDestroy(): void {
-  }
-
-  public retry(): void {
-  }
-
   private loadCustomers() {
-    console.log(this.paginator);
-    this.store.dispatch(new CustomerLoadAction(<CustomerParams>{
-      filter: this.input.nativeElement.value.toLocaleLowerCase(),
-      pageIndex: this.paginator.pageIndex,
-      pageSize: this.paginator.pageSize,
-      sortDirection: this.sort.direction,
-      sortField: this.sort.active
-    }));
+    this.store.dispatch(new CustomerLoadAction(
+      <CustomerParams>{
+        filter: this.filter.toLocaleLowerCase(),
+        pageIndex: this.paginator.pageIndex,
+        pageSize: this.paginator.pageSize,
+        sortDirection: this.sort.direction,
+        sortField: this.sort.active
+      }
+    ));
   }
 
   private initializeData(customers: Customer[]): void {
     this.dataSource = new MatTableDataSource(customers.length ? customers : this.noData);
+  }
+
+  public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  public retry(): void { 
+    this.loadCustomers();
   }
 }
