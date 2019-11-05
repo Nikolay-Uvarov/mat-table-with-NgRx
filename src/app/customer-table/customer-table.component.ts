@@ -18,8 +18,8 @@ import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   public displayedColumns: string[] = ['id', 'role', 'firstName', 'lastName', 'amount'];
   public dataSource: MatTableDataSource<Customer>;
@@ -74,7 +74,7 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
     ).subscribe();
   }
 
-  private loadCustomers() {
+  private loadCustomers(): void {
     this.store.dispatch(new CustomerLoadAction(
       <CustomerParams>{
         filter: this.filter.toLocaleLowerCase(),

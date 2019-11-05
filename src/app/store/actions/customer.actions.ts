@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { CustomerParams } from '../../core/models/customer-params';
-import { CustomerResponse } from 'src/app/core/models/CustomerResponse';
+import { CustomerResponse } from 'src/app/core/models/customer-response';
 
 export enum CustomerActionType {
   Loading = '[Customer] Loading',

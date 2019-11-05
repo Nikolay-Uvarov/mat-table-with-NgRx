@@ -4,7 +4,7 @@ import { Customer } from '../core/models/customer';
 import { CustomerParams } from '../core/models/customer-params';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { CustomerResponse } from '../core/models/CustomerResponse';
+import { CustomerResponse } from '../core/models/customer-response';
 
 @Injectable()
 export class CustomerService {
