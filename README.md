@@ -1,4 +1,4 @@
-# MatTableWithNgrx
+# Material Table and NgRx
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
