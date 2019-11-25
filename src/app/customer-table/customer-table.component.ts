@@ -28,36 +28,27 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
   public loading: boolean;
   public error$: Observable<boolean>;
   public filterSubject = new Subject<string>();
+  public defaultSort: Sort = { active: 'role', direction: 'asc' };
 
-  private defaultSort: Sort = { active: 'role', direction: 'asc' };
   private filter: string = "";
   private subscription: Subscription = new Subscription();
 
   constructor(public store: Store<GlobalState>) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(new CustomerLoadAction(
-      <CustomerParams>{
-        filter: this.filter,
-        pageIndex: 0,
-        pageSize: 3,
-        sortDirection: this.defaultSort.direction,
-        sortField: this.defaultSort.active
-      }
-    ));
-
-    this.error$ = this.store.pipe(select(selectCustomerError));
+    this.store.pipe(select(selectAllCustomer)).subscribe(customers => this.initializeData(customers));
+    this.store.pipe(select(selectCustomerTotal)).subscribe(total => this.customerTotal = total);
     this.subscription.add(this.store.pipe(select(selectCustomerLoading)).subscribe(loading => {
       if (loading) {
         this.dataSource = new MatTableDataSource(this.noData);
       }
       this.loading = loading;
     }));
-    this.store.pipe(select(selectAllCustomer)).subscribe(customers => this.initializeData(customers));
-    this.store.pipe(select(selectCustomerTotal)).subscribe(total => this.customerTotal = total);
+    this.error$ = this.store.pipe(select(selectCustomerError));
   }
 
   public ngAfterViewInit(): void {
+    this.loadCustomers();
     let filter$ = this.filterSubject.pipe(
       debounceTime(150),
       distinctUntilChanged(),
