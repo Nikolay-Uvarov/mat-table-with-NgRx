@@ -23,7 +23,6 @@
     "@angular/router": "~8.2.13",
     "@ngrx/effects": "^8.4.0",
     "@ngrx/entity": "^8.4.0",
-    "@ngrx/router-store": "^8.4.0",
     "@ngrx/store": "^8.4.0",
     "@ngrx/store-devtools": "^8.4.0",
     "core-js": "^2.5.4",
