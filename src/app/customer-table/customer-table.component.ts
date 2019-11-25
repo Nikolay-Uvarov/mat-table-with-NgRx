@@ -31,7 +31,7 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private defaultSort: Sort = { active: 'role', direction: 'asc' };
   private filter: string = "";
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
 
   constructor(public store: Store<GlobalState>) { }
 
@@ -47,12 +47,12 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
     ));
 
     this.error$ = this.store.pipe(select(selectCustomerError));
-    this.store.pipe(select(selectCustomerLoading)).subscribe(loading => {
+    this.subscription.add(this.store.pipe(select(selectCustomerLoading)).subscribe(loading => {
       if (loading) {
         this.dataSource = new MatTableDataSource(this.noData);
       }
       this.loading = loading;
-    });
+    }));
     this.store.pipe(select(selectAllCustomer)).subscribe(customers => this.initializeData(customers));
     this.store.pipe(select(selectCustomerTotal)).subscribe(total => this.customerTotal = total);
   }
@@ -69,9 +69,9 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
 
     let sort$ = this.sort.sortChange.pipe(tap(() => this.paginator.pageIndex = 0));
 
-    this.subscription = merge(filter$, sort$, this.paginator.page).pipe(
+    this.subscription.add(merge(filter$, sort$, this.paginator.page).pipe(
       tap(() => this.loadCustomers())
-    ).subscribe();
+    ).subscribe());
   }
 
   private loadCustomers(): void {
@@ -91,9 +91,7 @@ export class CustomerTableComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
   }
 
   public retry(): void { 

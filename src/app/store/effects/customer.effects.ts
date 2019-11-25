@@ -5,7 +5,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { CustomerActionType, CustomerLoadAction, CustomerLoadSuccessAction, CustomerLoadFailAction } from '../actions/customer.actions';
 import { CustomerService } from '../../services/customer.service';
 import { CustomerParams } from '../../core/models/customer-params';
-import { CustomerResponse } from 'src/app/core/models/customer-response';
+import { CustomerResponse } from '../../core/models/customer-response';
 
 @Injectable()
 export class CustomerEffects {

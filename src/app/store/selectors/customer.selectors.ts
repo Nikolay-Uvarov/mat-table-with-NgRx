@@ -22,7 +22,7 @@ export const selectCustomerEntities = createSelector(
 
 export const selectAllCustomer = createSelector(
   selectCustomerState,
-  (_selectAllCustomer)
+  _selectAllCustomer
 );
 
 export const selectCustomerError = createSelector(
