@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
-import { CustomerParams } from "src/app/core/models/customer-params";
-import { CustomerResponse } from "src/app/core/models/customer-response";
+import { CustomerParams } from "../../../app/core/models/customer-params";
+import { CustomerResponse } from "../../../app/core/models/customer-response";
 
 enum CustomerActionType {
   Loading = "[Customer] Reset",
