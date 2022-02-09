@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { CustomerActionType, CustomerLoadAction, CustomerLoadSuccessAction, CustomerLoadFailAction } from '../actions/customer.actions';
@@ -11,8 +11,8 @@ import { CustomerResponse } from '../../core/models/customer-response';
 export class CustomerEffects {
   constructor(private service: CustomerService, private actions$: Actions) { }
 
-  @Effect()
-  public loadCustomers$ = this.actions$
+  
+  public loadCustomers$ = createEffect(() => this.actions$
     .pipe(ofType<CustomerLoadAction>(CustomerActionType.Loading),
       map(action => action.payload),
       switchMap((params: CustomerParams) =>
@@ -21,5 +21,5 @@ export class CustomerEffects {
           catchError((error) => of(new CustomerLoadFailAction(error)))
         )
       )
-    );
+    ));
 }
