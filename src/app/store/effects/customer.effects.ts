@@ -1,25 +1,31 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
-import { CustomerActionType, CustomerLoadAction, CustomerLoadSuccessAction, CustomerLoadFailAction } from '../actions/customer.actions';
-import { CustomerService } from '../../services/customer.service';
-import { CustomerParams } from '../../core/models/customer-params';
-import { CustomerResponse } from '../../core/models/customer-response';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Action } from "@ngrx/store";
+import { switchMap, map, catchError, of, Observable } from "rxjs";
+import { CustomerParams } from "../../../app/core/models/customer-params";
+import { CustomerResponse } from "../../../app/core/models/customer-response";
+import { CustomerService } from "../../../app/services/customer.service";
+import { loadCustomersFailure, loadCustomersSuccess, loadingCustomers } from "../actions/customer.actions";
 
 @Injectable()
 export class CustomerEffects {
-  constructor(private service: CustomerService, private actions$: Actions) { }
+  constructor(private actions$: Actions, private service: CustomerService) {}
 
-  
-  public loadCustomers$ = createEffect(() => this.actions$
-    .pipe(ofType<CustomerLoadAction>(CustomerActionType.Loading),
-      map(action => action.payload),
-      switchMap((params: CustomerParams) =>
-        this.service.getCustomers(params).pipe(
-          map((response: CustomerResponse) => new CustomerLoadSuccessAction(response)),
-          catchError((error) => of(new CustomerLoadFailAction(error)))
+  public appointmentLoading$ = createEffect(
+    (): Observable<Action> =>
+      this.actions$.pipe(
+        ofType(loadingCustomers),
+        switchMap((payload: { params: CustomerParams  }) =>
+          this.service.getCustomers(payload.params).pipe(
+            map((response: CustomerResponse) =>
+              loadCustomersSuccess({ response })
+            ),
+            catchError((error: HttpErrorResponse) =>
+              of(loadCustomersFailure({ error }))
+            )
+          )
         )
       )
-    ));
+  );
 }

@@ -109,5 +109,8 @@
       }
     }
   },
-  "defaultProject": "mat-table-with-ngrx"
+  "defaultProject": "mat-table-with-ngrx",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

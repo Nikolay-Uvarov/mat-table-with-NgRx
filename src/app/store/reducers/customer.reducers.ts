@@ -1,28 +1,27 @@
-import { initialCustomerState, CustomerState, customerAdapter } from '../states/customer.state';
-import { CustomerAction, CustomerActionType } from '../actions/customer.actions';
+import {
+  initialCustomerState,
+  customerAdapter,
+} from "../states/customer.state";
+import * as customer from "../actions/customer.actions";
+import { createReducer, on } from "@ngrx/store";
 
-export function customerReducer(state = initialCustomerState, action: CustomerAction): CustomerState {
-  switch (action.type) {
-    case CustomerActionType.Loading: {
-      return { ...state, loading: true };
-    }
-    case CustomerActionType.LoadSuccess: {
-      return customerAdapter.setAll(action.payload.customers, {
-        ...state,
-        error: false,
-        loading: false,
-        total: action.payload.total
-      });
-    }
-    case CustomerActionType.LoadFailure: {
-      return customerAdapter.removeAll({
-        ...state,
-        error: true,
-        loading: false,
-        total: 0
-      });
-    }
-    default:
-      return state;
-  }
-}
+export const customerReducer = createReducer(
+  initialCustomerState,
+  on(customer.loadingCustomers, (state) => ({ ...state, loading: true })),
+  on(customer.loadCustomersSuccess, (state, { response }) =>
+    customerAdapter.setAll(response.customers, {
+      ...state,
+      error: false,
+      loading: false,
+      total: response.total,
+    })
+  ),
+  on(customer.loadCustomersFailure, (state) =>
+    customerAdapter.removeAll({
+      ...state,
+      error: true,
+      loading: false,
+      total: 0,
+    })
+  )
+);

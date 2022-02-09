@@ -1,26 +1,24 @@
-import { Action } from '@ngrx/store';
-import { CustomerParams } from '../../core/models/customer-params';
-import { CustomerResponse } from 'src/app/core/models/customer-response';
+import { createAction, props } from "@ngrx/store";
+import { CustomerParams } from "src/app/core/models/customer-params";
+import { CustomerResponse } from "src/app/core/models/customer-response";
 
-export enum CustomerActionType {
-  Loading = '[Customer] Loading',
-  LoadSuccess = '[Customer] LoadSuccess',
-  LoadFailure = '[Customer] LoadFailure'
+enum CustomerActionType {
+  Loading = "[Customer] Reset",
+  LoadCustomersSuccess = "[Appointment] Loaded Success",
+  loadCustomersFailure = "[Customer] Loaded Failure",
 }
 
-export class CustomerLoadAction implements Action {
-  public readonly type = CustomerActionType.Loading;
-  constructor(public payload: CustomerParams) {}
-}
+export const loadingCustomers = createAction(
+  CustomerActionType.Loading,
+  props<{ params: CustomerParams }>()
+);
 
-export class CustomerLoadSuccessAction implements Action {
-  public readonly type = CustomerActionType.LoadSuccess;
-  constructor(public payload: CustomerResponse) {}
-}
+export const loadCustomersSuccess = createAction(
+  CustomerActionType.LoadCustomersSuccess,
+  props<{ response: CustomerResponse }>()
+);
 
-export class CustomerLoadFailAction implements Action {
-  public readonly type = CustomerActionType.LoadFailure;
-  constructor(public error: any) {}
-}
-
-export type CustomerAction = CustomerLoadAction | CustomerLoadSuccessAction | CustomerLoadFailAction;
+export const loadCustomersFailure = createAction(
+  CustomerActionType.loadCustomersFailure,
+  props<{ error: any }>()
+);
