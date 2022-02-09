@@ -12,11 +12,11 @@ import { loadCustomersFailure, loadCustomersSuccess, loadingCustomers } from "..
 export class CustomerEffects {
   constructor(private actions$: Actions, private service: CustomerService) {}
 
-  public appointmentLoading$ = createEffect(
+  public loadCustomer$ = createEffect(
     (): Observable<Action> =>
       this.actions$.pipe(
         ofType(loadingCustomers),
-        switchMap((payload: { params: CustomerParams  }) =>
+        switchMap((payload: { params: CustomerParams }) =>
           this.service.getCustomers(payload.params).pipe(
             map((response: CustomerResponse) =>
               loadCustomersSuccess({ response })

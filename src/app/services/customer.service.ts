@@ -23,7 +23,11 @@ export class CustomerService {
       || ~(c.firstName.toLocaleLowerCase()).indexOf(params.filter)
       || ~(c.lastName.toLocaleLowerCase()).indexOf(params.filter));  
 
-    data.sort((a, b) => (a[params.sortField] > b[params.sortField] ? 1 : -1) * (params.sortDirection === "asc" ? 1 : -1));    
+    data.sort(
+      (a, b) =>
+        ((a as any)[params.sortField] > (b as any)[params.sortField] ? 1 : -1) *
+        (params.sortDirection === "asc" ? 1 : -1)
+    );    
     
     return {
       total: data.length,

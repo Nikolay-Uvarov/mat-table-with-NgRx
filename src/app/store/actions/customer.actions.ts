@@ -3,8 +3,8 @@ import { CustomerParams } from "../../../app/core/models/customer-params";
 import { CustomerResponse } from "../../../app/core/models/customer-response";
 
 enum CustomerActionType {
-  Loading = "[Customer] Reset",
-  LoadCustomersSuccess = "[Appointment] Loaded Success",
+  Loading = "[Customer] Loading",
+  LoadCustomersSuccess = "[Customer] Loaded Success",
   loadCustomersFailure = "[Customer] Loaded Failure",
 }
 
