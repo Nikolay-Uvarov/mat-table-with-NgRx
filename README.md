@@ -9,3 +9,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Info
 
 Project is based on the material table and NgRx.
+[Medium](https://medium.com/@mikalai_uvarau/angular-material-table-with-ngrx-server-pagination-filtering-and-sorting-e156fbd8926a)
