@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { Customer } from "../core/models/customer";
 import { MatSort, Sort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatLegacyTableDataSource as MatTableDataSource } from "@angular/material/legacy-table";
 import { GlobalState } from "../store/states/global.state";
 import { Store, select } from "@ngrx/store";
 import {
@@ -19,7 +19,7 @@ import {
 import {
   loadingCustomers,
 } from "../store/actions/customer.actions";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatLegacyPaginator as MatPaginator } from "@angular/material/legacy-paginator";
 import { Observable, merge, Subject, Subscription } from "rxjs";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 
